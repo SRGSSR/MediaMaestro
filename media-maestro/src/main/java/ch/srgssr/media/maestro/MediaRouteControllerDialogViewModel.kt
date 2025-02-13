@@ -62,7 +62,7 @@ internal class MediaRouteControllerDialogViewModel(
         val volumeRange: ClosedFloatingPointRange<Float>,
     ) {
         val hasMembers: Boolean
-            get() = route.isGroup && route.memberRoutes.size > 1
+            get() = route.isGroup && route.selectedRoutesInGroup.size > 1
     }
 
     private var mediaController: MediaControllerCompat? = null
@@ -91,7 +91,7 @@ internal class MediaRouteControllerDialogViewModel(
             mediaDescription != null || playbackState != null
         }.stateIn(viewModelScope, WhileSubscribed(), false)
     val showVolumeControl = _selectedRoute.map { selectedRoute ->
-        if (!isGroupVolumeUxEnabled && selectedRoute.isGroup && selectedRoute.memberRoutes.size > 1) {
+        if (!isGroupVolumeUxEnabled && selectedRoute.isGroup && selectedRoute.selectedRoutesInGroup.size > 1) {
             _isDeviceGroupExpanded.update { true }
             false
         } else {
@@ -289,7 +289,7 @@ internal class MediaRouteControllerDialogViewModel(
     private fun createRouteDetails(selectedRoute: RouteInfo): List<RouteDetail> {
         val volumes = volumes.value
 
-        return (listOf(selectedRoute) + selectedRoute.memberRoutes)
+        return (listOf(selectedRoute) + selectedRoute.selectedRoutesInGroup)
             .map { route ->
                 val isVolumeControlEnabled = route.isVolumeControlEnabled
                 val volumeMax = if (isVolumeControlEnabled) {

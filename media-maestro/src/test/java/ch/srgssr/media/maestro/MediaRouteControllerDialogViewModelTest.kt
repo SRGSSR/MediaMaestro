@@ -661,7 +661,7 @@ class MediaRouteControllerDialogViewModelTest(
         router.findRouteById(ROUTE_ID_GROUP).select()
 
         viewModel.routes.test {
-            val routes = router.selectedRoute.memberRoutes
+            val routes = router.selectedRoute.selectedRoutesInGroup
             val expected = listOf(getGroupRouteDetail()) + routes.map { route ->
                 RouteDetail(
                     route = route,
@@ -678,7 +678,7 @@ class MediaRouteControllerDialogViewModelTest(
     fun `set route volume on a new route of a group`() = runTest {
         router.findRouteById(ROUTE_ID_GROUP).select()
 
-        val routes = router.selectedRoute.memberRoutes
+        val routes = router.selectedRoute.selectedRoutesInGroup
         val targetVolume = 10f
         val routeToUpdate = routes[0]
         val expected = listOf(getGroupRouteDetail()) + routes.map { route ->
@@ -704,7 +704,7 @@ class MediaRouteControllerDialogViewModelTest(
     fun `set route volume on an updated route of a group`() = runTest {
         router.findRouteById(ROUTE_ID_GROUP).select()
 
-        val routes = router.selectedRoute.memberRoutes
+        val routes = router.selectedRoute.selectedRoutesInGroup
         val targetVolume = 10f
         val routeToUpdate = routes[0]
         val expected = listOf(getGroupRouteDetail()) + routes.map { route ->
@@ -731,7 +731,7 @@ class MediaRouteControllerDialogViewModelTest(
     fun `set route volume on a route outside of a group`() = runTest {
         router.findRouteById(ROUTE_ID_GROUP).select()
 
-        val routes = router.selectedRoute.memberRoutes
+        val routes = router.selectedRoute.selectedRoutesInGroup
         val routeToUpdate = router.findRouteById(ROUTE_ID_PRESENTATION)
         val expected = listOf(getGroupRouteDetail()) + routes.map { route ->
             RouteDetail(
@@ -755,7 +755,7 @@ class MediaRouteControllerDialogViewModelTest(
         routeToUpdate.select()
 
         val targetVolume = 10f
-        val routes = router.selectedRoute.memberRoutes
+        val routes = router.selectedRoute.selectedRoutesInGroup
         val groupRouteDetail = if (volumeControlEnabled) {
             getGroupRouteDetail().copy(volume = targetVolume)
         } else {
