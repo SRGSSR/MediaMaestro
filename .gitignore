@@ -18,6 +18,8 @@ output.json
 # IntelliJ
 *.iml
 .idea/
+!.idea/copyright/
+!.idea/icon.svg
 misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml
