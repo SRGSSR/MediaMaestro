@@ -46,6 +46,7 @@ android {
         abortOnError = true
         checkAllWarnings = true
         checkDependencies = true
+        disable.add("AndroidGradlePluginVersion")
         disable.add("GradleDependency")
         disable.add("NewerVersionAvailable")
         sarifReport = true
