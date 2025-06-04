@@ -144,6 +144,7 @@ dependencies {
     testImplementation(libs.robolectric.shadows.framework)
     testImplementation(libs.turbine)
 
+    screenshotTestImplementation(libs.android.screenshot.validation.api)
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }
 
