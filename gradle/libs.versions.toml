@@ -1,5 +1,5 @@
 [versions]
-android-compose-screenshot = "0.0.1-alpha09"
+android-compose-screenshot = "0.0.1-alpha10"
 android-gradle-plugin = "8.10.1"
 androidx-activity = "1.10.1"
 androidx-annotation = "1.9.1"
