@@ -16,9 +16,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.mediarouter.media.ScreenshotMediaRouter
 import ch.srgssr.media.maestro.MediaRouteChooserDialogViewModel.ChooserState
+import com.android.tools.screenshot.PreviewTest
 
 class MediaRouteChooserDialogScreenshot {
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun FindingDevicesPreview() {
         ScreenshotTheme {
@@ -41,6 +43,7 @@ class MediaRouteChooserDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun NoDevicesNoWifiHintPreview() {
         ScreenshotTheme {
@@ -63,6 +66,7 @@ class MediaRouteChooserDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun NoRoutesPreview() {
         ScreenshotTheme {
@@ -85,6 +89,7 @@ class MediaRouteChooserDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun ShowingRoutesPreview() {
         val router = ScreenshotMediaRouter(LocalContext.current)
@@ -114,6 +119,7 @@ class MediaRouteChooserDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun FindingDevicesCustomStylePreview() {
         ScreenshotTheme {
@@ -138,6 +144,7 @@ class MediaRouteChooserDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun NoDevicesNoWifiHintCustomStylePreview() {
         ScreenshotTheme {
@@ -162,6 +169,7 @@ class MediaRouteChooserDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun NoRoutesCustomStylePreview() {
         ScreenshotTheme {
@@ -186,6 +194,7 @@ class MediaRouteChooserDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun ShowingRoutesCustomStylePreview() {
         val router = ScreenshotMediaRouter(LocalContext.current)
