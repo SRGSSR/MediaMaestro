@@ -9,9 +9,11 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.android.tools.screenshot.PreviewTest
 
 class MediaRouteButtonScreenshot {
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun DisconnectedPreview() {
         ScreenshotTheme {
@@ -25,6 +27,7 @@ class MediaRouteButtonScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun ConnectingPreview() {
         ScreenshotTheme {
@@ -38,6 +41,7 @@ class MediaRouteButtonScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun ConnectedPreview() {
         ScreenshotTheme {
@@ -51,6 +55,7 @@ class MediaRouteButtonScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun DisconnectedFixedIconPreview() {
         ScreenshotTheme {
@@ -64,6 +69,7 @@ class MediaRouteButtonScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun ConnectingFixedIconPreview() {
         ScreenshotTheme {
@@ -77,6 +83,7 @@ class MediaRouteButtonScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun ConnectedFixedIconPreview() {
         ScreenshotTheme {
@@ -90,6 +97,7 @@ class MediaRouteButtonScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun DisconnectedCustomStylePreview() {
         ScreenshotTheme {
@@ -106,6 +114,7 @@ class MediaRouteButtonScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun ConnectingCustomStylePreview() {
         ScreenshotTheme {
@@ -122,6 +131,7 @@ class MediaRouteButtonScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun ConnectedCustomStylePreview() {
         ScreenshotTheme {

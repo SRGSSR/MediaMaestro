@@ -8,9 +8,11 @@ package ch.srgssr.media.maestro
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.android.tools.screenshot.PreviewTest
 
 class CastIconScreenshot {
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun DisconnectedPreview() {
         ScreenshotTheme {
@@ -23,6 +25,7 @@ class CastIconScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun ConnectingPreview() {
         ScreenshotTheme {
@@ -35,6 +38,7 @@ class CastIconScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun ConnectedPreview() {
         ScreenshotTheme {
