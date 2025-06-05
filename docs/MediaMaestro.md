@@ -35,6 +35,8 @@ In your module `build.gradle(.kts)` file, add the following dependency:
 implementation("ch.srgssr.media.maestro:media-maestro:<version>")
 ```
 
+**Note:** MediaMaestro requires AndroidX MediaRouter 1.8.0 or newer.
+
 [androidx-mediarouter]: https://developer.android.com/media/routing/mediarouter
 [compose]: https://developer.android.com/compose
 [github-package]: https://github.com/orgs/SRGSSR/packages?repo_name=MediaMaestro
