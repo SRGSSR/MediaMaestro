@@ -24,7 +24,7 @@ kotlinx-coroutines = "1.10.2"
 kotlinx-kover = "0.9.1"
 play-services-cast-framework = "22.0.0"
 robolectric = "4.14.1"
-turbine = "1.2.0"
+turbine = "1.2.1"
 
 [libraries]
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "androidx-activity" }
