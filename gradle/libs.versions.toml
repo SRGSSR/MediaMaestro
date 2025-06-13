@@ -1,5 +1,5 @@
 [versions]
-android-compose-screenshot = "0.0.1-alpha09"
+android-compose-screenshot = "0.0.1-alpha10"
 android-gradle-plugin = "8.10.1"
 androidx-activity = "1.10.1"
 androidx-annotation = "1.9.1"
@@ -27,6 +27,7 @@ robolectric = "4.14.1"
 turbine = "1.2.1"
 
 [libraries]
+android-screenshot-validation-api = { group = "com.android.tools.screenshot", name = "screenshot-validation-api", version.ref = "android-compose-screenshot" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "androidx-activity" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidx-annotation" }

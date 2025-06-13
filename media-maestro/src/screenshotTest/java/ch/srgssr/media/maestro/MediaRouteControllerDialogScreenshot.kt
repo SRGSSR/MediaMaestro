@@ -31,9 +31,11 @@ import coil3.annotation.ExperimentalCoilApi
 import coil3.asImage
 import coil3.compose.AsyncImagePreviewHandler
 import coil3.compose.LocalAsyncImagePreviewHandler
+import com.android.tools.screenshot.PreviewTest
 
 class MediaRouteControllerDialogScreenshot {
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun NoControlsPreview() {
         val router = ScreenshotMediaRouter(LocalContext.current)
@@ -71,6 +73,7 @@ class MediaRouteControllerDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun PlaybackControlPreview() {
         val router = ScreenshotMediaRouter(LocalContext.current)
@@ -108,6 +111,7 @@ class MediaRouteControllerDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun VolumeControlPreview() {
         val router = ScreenshotMediaRouter(LocalContext.current)
@@ -145,6 +149,7 @@ class MediaRouteControllerDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun CustomControlViewPreview() {
         val router = ScreenshotMediaRouter(LocalContext.current)
@@ -184,6 +189,7 @@ class MediaRouteControllerDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun PlaybackControlAndVolumePreview() {
         val router = ScreenshotMediaRouter(LocalContext.current)
@@ -221,6 +227,7 @@ class MediaRouteControllerDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun PlaybackControlAndVolumeCustomStylePreview() {
         val router = ScreenshotMediaRouter(LocalContext.current)
@@ -260,6 +267,7 @@ class MediaRouteControllerDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     private fun CustomControlViewAndVolumeControlPreview() {
         val router = ScreenshotMediaRouter(LocalContext.current)
@@ -299,6 +307,7 @@ class MediaRouteControllerDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     @OptIn(ExperimentalCoilApi::class)
     private fun ImageUriLandscapePreview() {
@@ -344,6 +353,7 @@ class MediaRouteControllerDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     @OptIn(ExperimentalCoilApi::class)
     private fun ImageUriSquarePreview() {
@@ -389,6 +399,7 @@ class MediaRouteControllerDialogScreenshot {
     }
 
     @Composable
+    @PreviewTest
     @ScreenshotPreviews
     @OptIn(ExperimentalCoilApi::class)
     private fun ImageUriPortraitPreview() {
