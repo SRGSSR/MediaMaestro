@@ -163,6 +163,52 @@ publishing {
             afterEvaluate {
                 from(components["release"])
             }
+
+            pom {
+                name = "MediaMaestro"
+                description = "Seamless integration of AndroidX MediaRouter with Compose"
+                url = "https://github.com/SRGSSR/MediaMaestro"
+                inceptionYear = "2025"
+
+                licenses {
+                    license {
+                        name = "The MIT License"
+                        url = "https://opensource.org/licenses/MIT"
+                    }
+                }
+
+                organization {
+                    name = "SRG SSR"
+                    url = "https://www.srgssr.ch/"
+                }
+
+                scm {
+                    connection = "scm:git:git://github.com/SRGSSR/MediaMaestro.git"
+                    developerConnection = "scm:git:git@github.com:SRGSSR/MediaMaestro.git"
+                    url = "https://github.com/SRGSSR/MediaMaestro"
+                }
+
+                issueManagement {
+                    system = "GitHub Issues"
+                    url = "https://github.com/SRGSSR/MediaMaestro/issues"
+                }
+
+                ciManagement {
+                    system = "GitHub Actions"
+                    url = "https://github.com/SRGSSR/MediaMaestro/actions"
+                }
+
+                // TODO Simplify this once https://github.com/gradle/gradle/issues/28759 is released
+                withXml {
+                    asNode().appendNode("distributionManagement").apply {
+                        appendNode("repository").apply {
+                            appendNode("id", "github-packages")
+                            appendNode("name", "GitHub Packages")
+                            appendNode("url", "https://maven.pkg.github.com/SRGSSR/MediaMaestro")
+                        }
+                    }
+                }
+            }
         }
     }
 
