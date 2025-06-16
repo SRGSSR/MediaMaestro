@@ -14,9 +14,11 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import com.android.tools.screenshot.PreviewTest
 
 class IconsScreenshot {
     @Composable
+    @PreviewTest
     @PreviewLightDark
     private fun IconPreview(@PreviewParameter(IconProvider::class) imageVector: ImageVector) {
         ScreenshotTheme {
