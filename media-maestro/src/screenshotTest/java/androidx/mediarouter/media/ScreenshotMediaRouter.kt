@@ -32,7 +32,7 @@ class ScreenshotMediaRouter(private val provider: MediaRouteProvider) {
     val routes = provider.descriptor
         ?.routes.orEmpty()
         .map { routeDescriptor ->
-            val provider = MediaRouter.ProviderInfo(provider)
+            val provider = MediaRouter.ProviderInfo(provider, false)
             val descriptorId = routeDescriptor.id
             val uniqueId = UUID.randomUUID().toString()
             val isSystemRoute = routeDescriptor.isSystemRoute
