@@ -4,6 +4,7 @@
  */
 
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.compose.screenshot)
@@ -37,10 +38,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     buildFeatures {
         compose = true
         resValues = false
@@ -72,6 +69,11 @@ android {
 
 kotlin {
     explicitApi()
+
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
+        freeCompilerArgs.add("-Xannotation-default-target=param-property")
+    }
 }
 
 tasks.withType<Test>().configureEach {
