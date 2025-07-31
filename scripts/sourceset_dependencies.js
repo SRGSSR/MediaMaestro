@@ -1,0 +1,1 @@
+sourceset_dependencies = '{":media-maestro/debug":[],":media-maestro/main":[],":media-maestro/release":[]}'
