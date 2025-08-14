@@ -13,7 +13,7 @@ plugins {
 
 android {
     namespace = "ch.srgssr.media.maestro.demo"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "ch.srgssr.media.maestro.demo"
