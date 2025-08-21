@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version-file: .github/workflows/.java-version
           distribution: 'temurin'
@@ -48,7 +48,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version-file: .github/workflows/.java-version
           distribution: 'temurin'
@@ -74,7 +74,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version-file: .github/workflows/.java-version
           distribution: 'temurin'
@@ -111,7 +111,7 @@ jobs:
         with:
           token: ${{ env.WORKFLOW_PAT }}
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version-file: .github/workflows/.java-version
           distribution: 'temurin'
@@ -149,7 +149,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version-file: .github/workflows/.java-version
           distribution: 'temurin'
@@ -167,7 +167,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version-file: .github/workflows/.java-version
           distribution: 'temurin'
@@ -187,7 +187,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version-file: .github/workflows/.java-version
           distribution: 'temurin'
@@ -224,7 +224,7 @@ jobs:
         with:
           token: ${{ env.WORKFLOW_PAT }}
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version-file: .github/workflows/.java-version
           distribution: 'temurin'
