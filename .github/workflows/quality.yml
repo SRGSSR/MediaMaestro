@@ -33,7 +33,7 @@ jobs:
       - name: Run Android Lint
         run: ./gradlew lintDebug
       - name: Upload Android Lint results
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: success() || failure()
         with:
           sarif_file: demo/build/reports/lint-results-debug.sarif
@@ -59,7 +59,7 @@ jobs:
       - name: Run Detekt
         run: ./gradlew detektDebug
       - name: Upload Detekt results
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: success() || failure()
         with:
           sarif_file: demo/build/reports/detekt/debug.sarif
