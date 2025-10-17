@@ -129,7 +129,7 @@ jobs:
         run: ./gradlew updateDebugScreenshotTest
       - name: Push new screenshots
         if: steps.update_screenshots.outcome == 'success'
-        uses: stefanzweifel/git-auto-commit-action@v6
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           file_pattern: '*/*.png'
           disable_globbing: true
@@ -242,7 +242,7 @@ jobs:
         run: ./gradlew apiDump
       - name: Push new API dumps
         if: steps.update_api_dumps.outcome == 'success'
-        uses: stefanzweifel/git-auto-commit-action@v6
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           file_pattern: '*/*.api'
           disable_globbing: true
