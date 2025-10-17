@@ -109,6 +109,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
+          ref: ${{ github.head_ref }}
           token: ${{ env.WORKFLOW_PAT }}
       - name: Set up Java
         uses: actions/setup-java@v5
@@ -222,6 +223,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
+          ref: ${{ github.head_ref }}
           token: ${{ env.WORKFLOW_PAT }}
       - name: Set up Java
         uses: actions/setup-java@v5
