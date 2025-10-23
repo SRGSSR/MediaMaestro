@@ -33,7 +33,6 @@ allprojects {
     afterEvaluate {
         if (pluginManager.hasPlugin("org.jetbrains.dokka")) {
             dokka {
-                moduleName = if (path == ":") "MediaMaestro" else name
                 moduleVersion = providers.environmentVariable("VERSION_NAME").orElse("main")
 
                 pluginsConfiguration.html {
