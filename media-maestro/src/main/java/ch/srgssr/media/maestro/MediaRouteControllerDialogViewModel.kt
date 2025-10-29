@@ -281,7 +281,7 @@ internal class MediaRouteControllerDialogViewModel(
         get() = actions and (ACTION_PAUSE or ACTION_PLAY_PAUSE) != 0L
 
     private val PlaybackStateCompat.isStopActionSupported: Boolean
-        get() = actions and ACTION_STOP != 0L
+        get() = (actions and ACTION_STOP) != 0L
 
     private val RouteInfo.isVolumeControlEnabled: Boolean
         get() = volumeControlEnabled && volumeHandling == RouteInfo.PLAYBACK_VOLUME_VARIABLE
