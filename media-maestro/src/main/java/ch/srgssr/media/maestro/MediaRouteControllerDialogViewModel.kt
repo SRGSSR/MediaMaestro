@@ -275,10 +275,10 @@ internal class MediaRouteControllerDialogViewModel(
     }
 
     private val PlaybackStateCompat.isPlayActionSupported: Boolean
-        get() = actions and (ACTION_PLAY or ACTION_PLAY_PAUSE) != 0L
+        get() = (actions and (ACTION_PLAY or ACTION_PLAY_PAUSE)) != 0L
 
     private val PlaybackStateCompat.isPauseActionSupported: Boolean
-        get() = actions and (ACTION_PAUSE or ACTION_PLAY_PAUSE) != 0L
+        get() = (actions and (ACTION_PAUSE or ACTION_PLAY_PAUSE)) != 0L
 
     private val PlaybackStateCompat.isStopActionSupported: Boolean
         get() = (actions and ACTION_STOP) != 0L
