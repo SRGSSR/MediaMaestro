@@ -10,8 +10,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import androidx.annotation.ColorInt
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -46,7 +44,7 @@ class MediaRouteControllerDialogScreenshot {
                 imageModel = null,
                 title = "Media title",
                 subtitle = "Media subtitle",
-                iconInfo = Icons.Default.PlayArrow to "Play",
+                iconInfo = Icons.PlayArrow to "Play",
                 isDeviceGroupExpanded = false,
                 showPlaybackControl = false,
                 showVolumeControl = false,
@@ -84,7 +82,7 @@ class MediaRouteControllerDialogScreenshot {
                 imageModel = null,
                 title = "Media title",
                 subtitle = "Media subtitle",
-                iconInfo = Icons.Default.PlayArrow to "Play",
+                iconInfo = Icons.PlayArrow to "Play",
                 isDeviceGroupExpanded = false,
                 showPlaybackControl = true,
                 showVolumeControl = false,
@@ -122,7 +120,7 @@ class MediaRouteControllerDialogScreenshot {
                 imageModel = null,
                 title = "Media title",
                 subtitle = "Media subtitle",
-                iconInfo = Icons.Default.PlayArrow to "Play",
+                iconInfo = Icons.PlayArrow to "Play",
                 isDeviceGroupExpanded = false,
                 showPlaybackControl = false,
                 showVolumeControl = true,
@@ -160,7 +158,7 @@ class MediaRouteControllerDialogScreenshot {
                 imageModel = null,
                 title = "Media title",
                 subtitle = "Media subtitle",
-                iconInfo = Icons.Default.PlayArrow to "Play",
+                iconInfo = Icons.PlayArrow to "Play",
                 isDeviceGroupExpanded = false,
                 showPlaybackControl = true,
                 showVolumeControl = false,
@@ -200,7 +198,7 @@ class MediaRouteControllerDialogScreenshot {
                 imageModel = null,
                 title = "Media title",
                 subtitle = "Media subtitle",
-                iconInfo = Icons.Default.PlayArrow to "Play",
+                iconInfo = Icons.PlayArrow to "Play",
                 isDeviceGroupExpanded = false,
                 showPlaybackControl = true,
                 showVolumeControl = true,
@@ -238,7 +236,7 @@ class MediaRouteControllerDialogScreenshot {
                 imageModel = null,
                 title = "Media title",
                 subtitle = "Media subtitle",
-                iconInfo = Icons.Default.PlayArrow to "Play",
+                iconInfo = Icons.PlayArrow to "Play",
                 isDeviceGroupExpanded = false,
                 showPlaybackControl = true,
                 showVolumeControl = true,
@@ -278,7 +276,7 @@ class MediaRouteControllerDialogScreenshot {
                 imageModel = null,
                 title = "Media title",
                 subtitle = "Media subtitle",
-                iconInfo = Icons.Default.PlayArrow to "Play",
+                iconInfo = Icons.PlayArrow to "Play",
                 isDeviceGroupExpanded = false,
                 showPlaybackControl = true,
                 showVolumeControl = true,
@@ -325,7 +323,7 @@ class MediaRouteControllerDialogScreenshot {
                     imageModel = "https://image.url/",
                     title = "Media title",
                     subtitle = "Media subtitle",
-                    iconInfo = Icons.Default.PlayArrow to "Play",
+                    iconInfo = Icons.PlayArrow to "Play",
                     isDeviceGroupExpanded = false,
                     showPlaybackControl = true,
                     showVolumeControl = true,
@@ -371,7 +369,7 @@ class MediaRouteControllerDialogScreenshot {
                     imageModel = "https://image.url/",
                     title = "Media title",
                     subtitle = "Media subtitle",
-                    iconInfo = Icons.Default.PlayArrow to "Play",
+                    iconInfo = Icons.PlayArrow to "Play",
                     isDeviceGroupExpanded = false,
                     showPlaybackControl = true,
                     showVolumeControl = true,
@@ -421,7 +419,7 @@ class MediaRouteControllerDialogScreenshot {
                     imageModel = "https://image.url/",
                     title = "Media title",
                     subtitle = "Media subtitle",
-                    iconInfo = Icons.Default.PlayArrow to "Play",
+                    iconInfo = Icons.PlayArrow to "Play",
                     isDeviceGroupExpanded = false,
                     showPlaybackControl = true,
                     showVolumeControl = true,
