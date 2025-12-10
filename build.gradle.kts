@@ -3,7 +3,8 @@
  * License information is available from the LICENSE file.
  */
 
-import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import dev.detekt.gradle.Detekt
+import dev.detekt.gradle.extensions.DetektExtension
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -20,14 +21,23 @@ plugins {
 }
 
 allprojects {
-    pluginManager.apply("io.gitlab.arturbosch.detekt")
+    pluginManager.apply(rootProject.libs.plugins.detekt.get().pluginId)
 
     extensions.configure<DetektExtension> {
-        basePath = projectDir.absolutePath
+        basePath.dir(projectDir.absolutePath)
         buildUponDefaultConfig = true
         config.setFrom(rootDir.resolve("config/detekt.yml"))
         ignoredBuildTypes = listOf("release")
         parallel = true
+    }
+
+    tasks.withType<Detekt>().configureEach {
+        reports {
+            checkstyle.required = false
+            html.required = true
+            markdown.required = false
+            sarif.required = true
+        }
     }
 
     afterEvaluate {
