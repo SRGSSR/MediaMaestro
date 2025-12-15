@@ -93,6 +93,10 @@ dependencyAnalysis {
             onUnusedDependencies {
                 exclude(libs.androidx.media3.exoplayer.dash)
             }
+
+            onRuntimeOnly {
+                exclude(libs.androidx.media3.exoplayer.dash)
+            }
         }
     }
 }
