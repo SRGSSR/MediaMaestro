@@ -58,7 +58,7 @@ internal class MediaRouteChooserDialogViewModel(
         FindingDevices,
 
         /**
-         * No devices were found after an initial search, a hint might be displayed to turn on WiFi.
+         * No devices were found after an initial search, a hint might be displayed to turn on Wi-Fi.
          */
         NoDevicesNoWifiHint,
 

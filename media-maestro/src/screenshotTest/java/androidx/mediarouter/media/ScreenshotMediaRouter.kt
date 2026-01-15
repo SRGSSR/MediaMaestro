@@ -9,7 +9,7 @@ import android.content.Context
 import java.util.UUID
 
 /**
- * The regular [MediaRouter] can't be used in screenshot tests, because it rely on the
+ * The regular [MediaRouter] can't be used in screenshot tests, because it relies on the
  * [android.media.MediaRouter] system service, which is not available.
  *
  * Instead, we can use this class, which mimic its behavior. This allows us to access a list of

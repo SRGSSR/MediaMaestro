@@ -200,14 +200,12 @@ publishing {
                     url = "https://github.com/SRGSSR/MediaMaestro/actions"
                 }
 
-                // TODO Simplify this once https://github.com/gradle/gradle/issues/28759 is released
-                withXml {
-                    asNode().appendNode("distributionManagement").apply {
-                        appendNode("repository").apply {
-                            appendNode("id", "github-packages")
-                            appendNode("name", "GitHub Packages")
-                            appendNode("url", "https://maven.pkg.github.com/SRGSSR/MediaMaestro")
-                        }
+                distributionManagement {
+                    @Suppress("UnstableApiUsage")
+                    repository {
+                        id = "github-packages"
+                        name = "GitHub Packages"
+                        url = "https://maven.pkg.github.com/SRGSSR/MediaMaestro"
                     }
                 }
             }
