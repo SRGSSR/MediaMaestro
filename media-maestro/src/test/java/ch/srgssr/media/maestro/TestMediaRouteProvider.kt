@@ -82,7 +82,7 @@ internal class TestMediaRouteProvider(context: Context) : MediaRouteProvider(con
             .build()
     }
 
-    override fun onCreateRouteController(routeId: String, routeGroupId: String): RouteController? {
+    override fun onCreateRouteController(routeId: String, routeGroupId: String): RouteController {
         val route = MediaRouter.getInstance(context).findRouteById(routeId)
 
         return TestRouteController(route)

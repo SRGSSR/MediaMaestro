@@ -45,7 +45,7 @@ import kotlin.math.atan
 /**
  * Display a Cast icon, based on the current connection state to Cast. If [state] is:
  *
- * - [CastConnectionState.Disconnected], a icon is displayed, showing just a border, with three arcs
+ * - [CastConnectionState.Disconnected], an icon is displayed, showing just a border, with three arcs
  * in the bottom left corner.
  * - [CastConnectionState.Connected], the same icon is displayed, with the addition of a filled
  * inner rectangle.

@@ -152,8 +152,8 @@ internal class MediaRouteControllerDialogViewModel(
      * This list is never empty.
      */
     val routes = combine(_selectedRoute, volumes) { selectedRoute, volumes ->
-        createRouteDetails(selectedRoute)
-    }.stateIn(viewModelScope, WhileSubscribed(), createRouteDetails(router.selectedRoute))
+        createRouteDetails(selectedRoute, volumes)
+    }.stateIn(viewModelScope, WhileSubscribed(), createRouteDetails(router.selectedRoute, volumes.value))
 
     init {
         router.addCallback(
@@ -286,9 +286,10 @@ internal class MediaRouteControllerDialogViewModel(
     private val RouteInfo.isVolumeControlEnabled: Boolean
         get() = volumeControlEnabled && volumeHandling == RouteInfo.PLAYBACK_VOLUME_VARIABLE
 
-    private fun createRouteDetails(selectedRoute: RouteInfo): List<RouteDetail> {
-        val volumes = volumes.value
-
+    private fun createRouteDetails(
+        selectedRoute: RouteInfo,
+        volumes: Map<RouteInfo, Float>,
+    ): List<RouteDetail> {
         return (listOf(selectedRoute) + selectedRoute.selectedRoutesInGroup)
             .map { route ->
                 val isVolumeControlEnabled = route.isVolumeControlEnabled
