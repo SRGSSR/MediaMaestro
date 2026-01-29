@@ -1,7 +1,7 @@
 [versions]
 android-compose-screenshot = "0.0.1-alpha13"
 android-gradle-plugin = "8.13.2"
-androidx-activity = "1.12.2"
+androidx-activity = "1.12.3"
 androidx-annotation = "1.9.1"
 androidx-annotation-experimental = "1.5.1"
 androidx-compose = "2026.01.00"
