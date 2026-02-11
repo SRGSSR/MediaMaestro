@@ -22,7 +22,7 @@ kotlin = "2.3.10"
 kotlinx-binary-compatibility-validator = "0.18.1"
 kotlinx-coroutines = "1.10.2"
 kotlinx-kover = "0.9.7"
-play-services-cast-framework = "22.2.0"
+play-services-cast-framework = "22.3.0"
 robolectric = "4.16.1"
 turbine = "1.2.1"
 
