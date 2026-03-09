@@ -10,12 +10,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.application
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -44,10 +41,10 @@ import kotlin.time.Duration.Companion.seconds
  * @see MediaRouteChooserDialogViewModel.Factory
  */
 internal class MediaRouteChooserDialogViewModel(
-    application: Application,
+    private val application: Context,
     private val savedStateHandle: SavedStateHandle,
     private val routeSelector: MediaRouteSelector,
-) : AndroidViewModel(application) {
+) : ViewModel() {
     /**
      * The state of the [MediaRouteChooserDialog].
      */
@@ -182,14 +179,13 @@ internal class MediaRouteChooserDialogViewModel(
      * @param routeSelector  The media route selector for filtering the routes that the user can
      * select using the media route chooser dialog.
      */
-    class Factory(private val routeSelector: MediaRouteSelector) : ViewModelProvider.Factory {
+    class Factory(private val routeSelector: MediaRouteSelector, private val context: Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-            val application = checkNotNull(extras[APPLICATION_KEY])
             val savedStateHandle = extras.createSavedStateHandle()
 
             @Suppress("UNCHECKED_CAST")
             return MediaRouteChooserDialogViewModel(
-                application = application,
+                application = context,
                 savedStateHandle = savedStateHandle,
                 routeSelector = routeSelector,
             ) as T

@@ -6,6 +6,7 @@
 package ch.srgssr.media.maestro
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -68,7 +69,7 @@ public enum class DialogType {
  * @see MediaRouteChooserDialogViewModel.Factory
  */
 internal class MediaRouteButtonViewModel(
-    application: Application,
+    application: Context,
     private val savedStateHandle: SavedStateHandle,
     private val routeSelector: MediaRouteSelector,
 ) : ViewModel() {
@@ -172,13 +173,12 @@ internal class MediaRouteButtonViewModel(
      * @param routeSelector  The media route selector for filtering the routes that the user can
      * select using the media route chooser dialog.
      */
-    class Factory(private val routeSelector: MediaRouteSelector) : ViewModelProvider.Factory {
+    class Factory(private val routeSelector: MediaRouteSelector, private val context: Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-            val application = checkNotNull(extras[APPLICATION_KEY])
             val savedStateHandle = extras.createSavedStateHandle()
 
             @Suppress("UNCHECKED_CAST")
-            return MediaRouteButtonViewModel(application, savedStateHandle, routeSelector) as T
+            return MediaRouteButtonViewModel(context, savedStateHandle, routeSelector) as T
         }
     }
 

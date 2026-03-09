@@ -5,8 +5,8 @@
 
 package ch.srgssr.media.maestro
 
-import android.app.Application
 import android.app.PendingIntent
+import android.content.Context
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
@@ -26,11 +26,9 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -52,10 +50,10 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
 internal class MediaRouteControllerDialogViewModel(
-    application: Application,
+    application: Context,
     private val savedStateHandle: SavedStateHandle,
     private val volumeControlEnabled: Boolean,
-) : AndroidViewModel(application) {
+) : ViewModel() {
     internal data class RouteDetail(
         val route: RouteInfo,
         val volume: Float,
@@ -318,14 +316,13 @@ internal class MediaRouteControllerDialogViewModel(
         private val VOLUME_UPDATE_DELAY = 500.milliseconds
     }
 
-    class Factory(private val volumeControlEnabled: Boolean) : ViewModelProvider.Factory {
+    class Factory(private val volumeControlEnabled: Boolean, private val context : Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-            val application = checkNotNull(extras[APPLICATION_KEY])
             val savedStateHandle = extras.createSavedStateHandle()
 
             @Suppress("UNCHECKED_CAST")
             return MediaRouteControllerDialogViewModel(
-                application = application,
+                application = context,
                 savedStateHandle = savedStateHandle,
                 volumeControlEnabled = volumeControlEnabled,
             ) as T
