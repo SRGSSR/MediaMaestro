@@ -34,7 +34,9 @@ jobs:
         run: ./gradlew lintDebug
       - name: Upload Android Lint results
         uses: github/codeql-action/upload-sarif@v4
-        if: success() || failure()
+        # Don't upload results from the merge queue.
+        # See https://github.com/github/codeql-action/issues/1572
+        if: (! startsWith(github.ref, 'refs/heads/gh-readonly-queue')) && (success() || failure())
         with:
           sarif_file: demo/build/reports/lint-results-debug.sarif
           category: android-lint
@@ -60,7 +62,9 @@ jobs:
         run: ./gradlew detektDebug
       - name: Upload Detekt results
         uses: github/codeql-action/upload-sarif@v4
-        if: success() || failure()
+        # Don't upload results from the merge queue.
+        # See https://github.com/github/codeql-action/issues/1572
+        if: (! startsWith(github.ref, 'refs/heads/gh-readonly-queue')) && (success() || failure())
         with:
           sarif_file: demo/build/reports/detekt/debug.sarif
           category: detekt
@@ -201,7 +205,7 @@ jobs:
         run: ./gradlew :buildHealth
       - name: Comment Analysis Report
         if: ${{ github.event_name == 'pull_request' }}
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           path: build/reports/dependency-analysis/build-health-report.txt
           delete: ${{ steps.analyse_dependencies.outcome == 'success' }}
