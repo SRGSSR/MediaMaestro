@@ -2,7 +2,7 @@
 android-compose-screenshot = "0.0.1-alpha14"
 android-gradle-plugin = "8.13.2"
 androidx-activity = "1.13.0"
-androidx-annotation = "1.9.1"
+androidx-annotation = "1.10.0"
 androidx-annotation-experimental = "1.6.0"
 androidx-compose = "2026.03.01"
 androidx-core = "1.17.0"
