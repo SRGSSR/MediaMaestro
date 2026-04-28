@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.mediarouter.media.MediaRouteSelector
@@ -73,9 +74,10 @@ public fun MediaRouteButton(
     mediaRouteDynamicControllerDialog: @Composable (onDismissRequest: () -> Unit) -> Unit = mediaRouteControllerDialog,
     onDialogTypeChange: (dialogType: DialogType) -> Unit = {},
 ) {
+    val context = LocalContext.current.applicationContext
     val viewModel = viewModel<MediaRouteButtonViewModel>(
         key = routeSelector.toString(),
-        factory = MediaRouteButtonViewModel.Factory(routeSelector),
+        factory = MediaRouteButtonViewModel.Factory(routeSelector,context),
     )
     val castConnectionState by viewModel.castConnectionState.collectAsState()
     val dialogType by viewModel.dialogType.collectAsState(DialogType.None)
