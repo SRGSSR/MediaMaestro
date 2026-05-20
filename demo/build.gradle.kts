@@ -47,6 +47,7 @@ android {
         disable.add("AndroidGradlePluginVersion")
         disable.add("GradleDependency")
         disable.add("NewerVersionAvailable")
+        disable.add("OldTargetApi")
         sarifReport = true
         warningsAsErrors = true
     }

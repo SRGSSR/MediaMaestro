@@ -6,10 +6,10 @@
 package ch.srgssr.media.maestro
 
 import android.app.Application
+import android.os.Bundle
 import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.core.content.getSystemService
-import androidx.core.os.bundleOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -230,8 +230,11 @@ class MediaRouteButtonViewModelTest {
     @Test
     fun `check that the fixed icon value is read from the router parameters`() = runTest {
         viewModel.fixedIcon.test {
+            val routerParamsExtras = Bundle()
+            routerParamsExtras.putBoolean(MediaRouterParams.EXTRAS_KEY_FIXED_CAST_ICON, true)
+
             router.routerParams = MediaRouterParams.Builder()
-                .setExtras(bundleOf(MediaRouterParams.EXTRAS_KEY_FIXED_CAST_ICON to true))
+                .setExtras(routerParamsExtras)
                 .build()
 
             shadowOf(Looper.getMainLooper()).idle()

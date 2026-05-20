@@ -1,11 +1,11 @@
 [versions]
-android-compose-screenshot = "0.0.1-alpha13"
+android-compose-screenshot = "0.0.1-alpha14"
 android-gradle-plugin = "8.13.2"
 androidx-activity = "1.13.0"
-androidx-annotation = "1.9.1"
-androidx-annotation-experimental = "1.5.1"
-androidx-compose = "2026.03.01"
-androidx-core = "1.17.0"
+androidx-annotation = "1.10.0"
+androidx-annotation-experimental = "1.6.0"
+androidx-compose = "2026.05.01"
+androidx-core = "1.18.0"
 androidx-fragment = "1.8.9"
 androidx-lifecycle = "2.10.0"
 androidx-media = "1.7.1"
@@ -14,15 +14,15 @@ androidx-mediarouter = "1.8.1"
 androidx-test-core = "1.7.0"
 androidx-test-ext-junit = "1.3.0"
 coil = "3.4.0"
-dependency-analysis-gradle-plugin = "3.6.1"
+dependency-analysis-gradle-plugin = "3.10.0"
 detekt = "1.23.8"
 dokka = "2.2.0"
 junit = "4.13.2"
-kotlin = "2.3.20"
+kotlin = "2.3.21"
 kotlinx-binary-compatibility-validator = "0.18.1"
-kotlinx-coroutines = "1.10.2"
+kotlinx-coroutines = "1.11.0"
 kotlinx-kover = "0.9.8"
-play-services-cast-framework = "22.3.0"
+play-services-cast-framework = "22.3.1"
 robolectric = "4.16.1"
 turbine = "1.2.1"
 
@@ -85,7 +85,7 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-compose-screenshot = { id = "com.android.compose.screenshot", version.ref = "android-compose-screenshot" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
-dependency-analysis-gralde-plugin = { id = "com.autonomousapps.dependency-analysis", version.ref = "dependency-analysis-gradle-plugin" }
+dependency-analysis-gradle-plugin = { id = "com.autonomousapps.dependency-analysis", version.ref = "dependency-analysis-gradle-plugin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
