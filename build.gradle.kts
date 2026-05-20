@@ -13,7 +13,6 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.dokka)
     alias(libs.plugins.dokka.javadoc) apply false
-    alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.kotlinx.binary.compatibility.validator)
     alias(libs.plugins.kotlinx.kover)
@@ -66,9 +65,9 @@ subprojects {
 apiValidation {
     ignoredProjects.add("demo")
     // See https://github.com/Kotlin/binary-compatibility-validator/issues/74
-    ignoredClasses.add("ch.srgssr.media.maestro.ComposableSingletons\$CastIconKt")
-    ignoredClasses.add("ch.srgssr.media.maestro.ComposableSingletons\$MediaRouteChooserDialogKt")
-    ignoredClasses.add("ch.srgssr.media.maestro.ComposableSingletons\$MediaRouteControllerDialogKt")
+    ignoredClasses.add($$"ch.srgssr.media.maestro.ComposableSingletons$CastIconKt")
+    ignoredClasses.add($$"ch.srgssr.media.maestro.ComposableSingletons$MediaRouteChooserDialogKt")
+    ignoredClasses.add($$"ch.srgssr.media.maestro.ComposableSingletons$MediaRouteControllerDialogKt")
 }
 
 dokka {

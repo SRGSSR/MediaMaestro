@@ -12,7 +12,7 @@ import androidx.compose.ui.test.ComposeUiTest
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.runComposeUiTest
+import androidx.compose.ui.test.v2.runComposeUiTest
 import androidx.core.content.getSystemService
 import androidx.mediarouter.media.MediaRouter
 import androidx.mediarouter.testing.MediaRouterTestHelper
