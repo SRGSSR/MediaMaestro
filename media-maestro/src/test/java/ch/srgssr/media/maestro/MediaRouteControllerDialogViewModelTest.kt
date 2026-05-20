@@ -63,6 +63,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
+@Suppress("LargeClass")
 class MediaRouteControllerDialogViewModelTest(
     private val volumeControlEnabled: Boolean,
 ) {
