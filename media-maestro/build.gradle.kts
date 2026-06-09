@@ -19,7 +19,7 @@ plugins {
 android {
     experimentalProperties["android.experimental.enableScreenshotTest"] = true
     namespace = "ch.srgssr.media.maestro"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 23
