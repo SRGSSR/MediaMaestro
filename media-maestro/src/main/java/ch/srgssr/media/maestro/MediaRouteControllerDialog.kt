@@ -45,6 +45,7 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -102,9 +103,10 @@ public fun MediaRouteControllerDialog(
     onDismissRequest: () -> Unit,
     customControlView: @Composable (() -> Unit)? = null,
 ) {
+    val context = LocalContext.current.applicationContext
     val viewModel = viewModel<MediaRouteControllerDialogViewModel>(
         key = routeSelector.toString(),
-        factory = MediaRouteControllerDialogViewModel.Factory(volumeControlEnabled),
+        factory = MediaRouteControllerDialogViewModel.Factory(volumeControlEnabled, context),
     )
     val showDialog by viewModel.showDialog.collectAsState()
     val isDeviceGroupExpanded by viewModel.isDeviceGroupExpanded.collectAsState()
