@@ -86,6 +86,11 @@ dependencyAnalysis {
             onUnusedDependencies {
                 exclude(libs.androidx.compose.ui.tooling.asProvider())
             }
+
+            onUsedTransitiveDependencies {
+                // androidx.core:core-ktx is empty since version 1.19.0, so there's no need to declare that dependency
+                exclude("androidx.core:core-ktx")
+            }
         }
 
         project(":demo") {
