@@ -19,7 +19,7 @@ plugins {
 android {
     experimentalProperties["android.experimental.enableScreenshotTest"] = true
     namespace = "ch.srgssr.media.maestro"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 23
@@ -123,7 +123,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.unit)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
