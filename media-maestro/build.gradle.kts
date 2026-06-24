@@ -76,13 +76,17 @@ tasks.withType<Test>().configureEach {
     testLogging.exceptionFormat = TestExceptionFormat.FULL
 }
 
-val dokkaHtmlJar by tasks.registering(Jar::class) {
+val dokkaHtmlJar = tasks.register<Jar>("dokkaHtmlJar") {
+    description = "Generate Dokka HTML jar"
+
     dependsOn(tasks.dokkaGeneratePublicationHtml)
     from(tasks.dokkaGeneratePublicationHtml.flatMap { it.outputDirectory })
     archiveClassifier.set("html-docs")
 }
 
-val dokkaJavadocJar by tasks.registering(Jar::class) {
+val dokkaJavadocJar = tasks.register<Jar>("dokkaJavadocJar") {
+    description = "Generate Dokka Javadoc jar"
+
     dependsOn(tasks.dokkaGeneratePublicationJavadoc)
     from(tasks.dokkaGeneratePublicationJavadoc.flatMap { it.outputDirectory })
     archiveClassifier.set("javadoc")
