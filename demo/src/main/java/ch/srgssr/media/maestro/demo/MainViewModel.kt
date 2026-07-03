@@ -13,25 +13,16 @@ import android.media.session.PlaybackState
 import androidx.annotation.OptIn
 import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.media3.cast.CastPlayer
-import androidx.media3.cast.SessionAvailabilityListener
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.MimeTypes
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.mediarouter.media.MediaControlIntent
 import androidx.mediarouter.media.MediaRouteSelector
 import androidx.mediarouter.media.MediaRouter
 import com.google.android.gms.cast.framework.CastContext
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import kotlin.time.Duration.Companion.seconds
 import android.media.MediaMetadata as PlatformMediaMetadata
 
 @OptIn(UnstableApi::class)
@@ -39,30 +30,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val playerListener = PlayerListener()
     private val castContext = CastContext.getSharedInstance(application)
     private val mediaSession = MediaSession(application, "media-maestro-demo")
-    private val localPlayer = ExoPlayer.Builder(application).build()
-    private val castPlayer = CastPlayer(castContext)
-    private val currentPlayer =
-        MutableStateFlow(if (castPlayer.isCastSessionAvailable) castPlayer else localPlayer)
 
-    val player = currentPlayer
-        .onEach { player ->
-            val oldPlayer = if (player == localPlayer) castPlayer else localPlayer
-            player.addListener(playerListener)
-            player.volume = oldPlayer.volume
-            player.repeatMode = oldPlayer.repeatMode
-            player.playWhenReady = oldPlayer.playWhenReady
-
-            oldPlayer.currentMediaItem?.let {
-                player.setMediaItem(it, oldPlayer.currentPosition)
-            }
-            oldPlayer.removeListener(playerListener)
-            oldPlayer.stop()
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = WhileSubscribed(5.seconds.inWholeMilliseconds),
-            initialValue = currentPlayer.value,
-        )
+    val player: CastPlayer = CastPlayer.Builder(application).build()
 
     val routeSelector = castContext.mergedSelector ?: MediaRouteSelector.Builder()
         .addControlCategory(MediaControlIntent.CATEGORY_LIVE_VIDEO)
@@ -72,27 +41,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     init {
         MediaRouter.getInstance(application).setMediaSession(mediaSession)
 
-        localPlayer.setMediaItems(listOf(mediaItemAudio, mediaItemVideo))
-        localPlayer.volume = 0f
-        localPlayer.prepare()
-        localPlayer.play()
-
-        castPlayer.setSessionAvailabilityListener(object : SessionAvailabilityListener {
-            override fun onCastSessionAvailable() {
-                currentPlayer.update { castPlayer }
-            }
-
-            override fun onCastSessionUnavailable() {
-                currentPlayer.update { localPlayer }
-            }
-        })
+        player.addListener(playerListener)
+        player.setMediaItems(listOf(mediaItemAudio, mediaItemVideo))
+        player.prepare()
+        player.play()
     }
 
     override fun onCleared() {
         mediaSession.release()
-        localPlayer.release()
-        castPlayer.setSessionAvailabilityListener(null)
-        castPlayer.release()
+        player.removeListener(playerListener)
+        player.release()
     }
 
     private inner class PlayerListener : Player.Listener {
@@ -113,7 +71,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 Player.STATE_ENDED -> PlaybackState.STATE_STOPPED
                 else -> PlaybackState.STATE_NONE
             }
-            val player = currentPlayer.value
             val position = player.currentPosition
             val playbackSpeed = player.playbackParameters.speed
             val actions = listOfNotNull(

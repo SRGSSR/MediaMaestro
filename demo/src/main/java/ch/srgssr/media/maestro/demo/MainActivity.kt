@@ -23,7 +23,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,13 +50,11 @@ class MainActivity : FragmentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val player by mainViewModel.player.collectAsState()
-
             var useMaestro by remember { mutableStateOf(true) }
 
             DemoTheme {
                 MainView(
-                    player = player,
+                    player = mainViewModel.player,
                     useMaestro = useMaestro,
                     routeSelector = mainViewModel.routeSelector,
                     modifier = Modifier.fillMaxSize(),
