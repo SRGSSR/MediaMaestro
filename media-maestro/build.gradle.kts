@@ -56,11 +56,6 @@ android {
             withSourcesJar()
         }
     }
-
-    sourceSets.create("screenshotTestDebug") {
-        // Disable explicit API mode for screenshot tests
-        project.kotlin.compilerOptions.freeCompilerArgs.add("-Xexplicit-api=disable")
-    }
 }
 
 kotlin {
