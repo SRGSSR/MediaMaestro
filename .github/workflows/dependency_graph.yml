@@ -27,4 +27,4 @@ jobs:
           java-version-file: .github/workflows/.java-version
           distribution: 'temurin'
       - name: Submit dependency graph
-        uses: gradle/actions/dependency-submission@6
+        uses: gradle/actions/dependency-submission@v6
