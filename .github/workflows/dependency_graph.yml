@@ -1,0 +1,30 @@
+name: Submit dependency graph
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  submit-dependency-graph:
+    name: Submit dependency graph
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      USERNAME: ${{ github.actor }}
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          java-version-file: .github/workflows/.java-version
+          distribution: 'temurin'
+      - name: Submit dependency graph
+        uses: gradle/actions/dependency-submission@6
