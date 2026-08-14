@@ -5,12 +5,10 @@
 
 package ch.srgssr.media.maestro
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -61,7 +59,7 @@ public enum class DialogType {
 /**
  * [ViewModel] exposing useful information for building [MediaRouteButton].
  *
- * @param application The [Application] instance.
+ * @param context The [Context] instance.
  * @param savedStateHandle The [SavedStateHandle] instance.
  * @param routeSelector The media route selector for filtering the routes that the user can select
  * using the media route chooser dialog.
@@ -69,12 +67,12 @@ public enum class DialogType {
  * @see MediaRouteChooserDialogViewModel.Factory
  */
 internal class MediaRouteButtonViewModel(
-    application: Context,
+    context: Context,
     private val savedStateHandle: SavedStateHandle,
     private val routeSelector: MediaRouteSelector,
 ) : ViewModel() {
     private val mediaRouterCallback = MediaRouterCallback()
-    private val router = MediaRouter.getInstance(application)
+    private val router = MediaRouter.getInstance(context)
 
     private val _fixedIcon = MutableStateFlow(false)
     private val routerUpdates = MutableStateFlow(0)
@@ -110,7 +108,7 @@ internal class MediaRouteButtonViewModel(
         val routerParams = router.routerParams
         if (routerParams != null) {
             if (routerParams.isOutputSwitcherEnabled && MediaRouter.isMediaTransferEnabled()) {
-                if (SystemOutputSwitcherDialogController.showDialog(application)) {
+                if (SystemOutputSwitcherDialogController.showDialog(context)) {
                     return@combine DialogType.None
                 }
             }
@@ -170,10 +168,14 @@ internal class MediaRouteButtonViewModel(
     /**
      * Factory for [MediaRouteButtonViewModel].
      *
+     * @param context The [Context] instance.
      * @param routeSelector  The media route selector for filtering the routes that the user can
      * select using the media route chooser dialog.
      */
-    class Factory(private val routeSelector: MediaRouteSelector, private val context: Context) : ViewModelProvider.Factory {
+    class Factory(
+        private val context: Context,
+        private val routeSelector: MediaRouteSelector,
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
             val savedStateHandle = extras.createSavedStateHandle()
 

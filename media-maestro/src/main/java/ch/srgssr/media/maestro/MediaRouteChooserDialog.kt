@@ -108,7 +108,7 @@ public fun MediaRouteChooserDialog(
     val context = LocalContext.current.applicationContext
     val viewModel = viewModel<MediaRouteChooserDialogViewModel>(
         key = routeSelector.toString(),
-        factory = MediaRouteChooserDialogViewModel.Factory(routeSelector,context),
+        factory = MediaRouteChooserDialogViewModel.Factory(context, routeSelector),
     )
     val showDialog by viewModel.showDialog.collectAsState()
     val routes by viewModel.routes.collectAsState()

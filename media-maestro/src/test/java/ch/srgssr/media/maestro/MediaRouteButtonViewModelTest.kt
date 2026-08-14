@@ -14,7 +14,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
-import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.testing.ViewModelScenario
 import androidx.lifecycle.viewmodel.testing.viewModelScenario
 import androidx.mediarouter.media.MediaControlIntent
@@ -249,19 +248,13 @@ class MediaRouteButtonViewModelTest {
         }
     }
 
-    @Test(expected = IllegalStateException::class)
-    fun `ViewModel factory fails to create a ViewModel without a Context`() {
-        MediaRouteButtonViewModel.Factory(MediaRouteSelector.EMPTY)
-            .create(ViewModel::class.java, CreationExtras.Empty)
-    }
-
     @Test
     fun `ViewModel factory creates an instance of MediaRouteButtonViewModel`() {
         Robolectric.buildActivity(ComponentActivity::class.java)
             .use { activityController ->
                 val viewModel = ViewModelProvider(
                     owner = activityController.setup().get(),
-                    factory = MediaRouteButtonViewModel.Factory(MediaRouteSelector.EMPTY),
+                    factory = MediaRouteButtonViewModel.Factory(context, MediaRouteSelector.EMPTY),
                 ).get<ViewModel>()
 
                 assertIs<MediaRouteButtonViewModel>(viewModel)

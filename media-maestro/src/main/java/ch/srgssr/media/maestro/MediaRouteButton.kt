@@ -29,7 +29,7 @@ import androidx.mediarouter.media.MediaRouteSelector
  * When the default route is selected, the button will appear in an inactive state indicating that
  * the application is not connected to a route. Clicking on the button opens a
  * [MediaRouteChooserDialog] to allow the user to select a route. If no non-default routes
- * match the selector and it is not possible for an active scan to discover any matching routes,
+ * match the selector, and it is not possible for an active scan to discover any matching routes,
  * then the button is disabled.
  *
  * When a non-default route is selected, the button will appear in an active state indicating that
@@ -77,7 +77,7 @@ public fun MediaRouteButton(
     val context = LocalContext.current.applicationContext
     val viewModel = viewModel<MediaRouteButtonViewModel>(
         key = routeSelector.toString(),
-        factory = MediaRouteButtonViewModel.Factory(routeSelector,context),
+        factory = MediaRouteButtonViewModel.Factory(context, routeSelector),
     )
     val castConnectionState by viewModel.castConnectionState.collectAsState()
     val dialogType by viewModel.dialogType.collectAsState(DialogType.None)

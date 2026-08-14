@@ -106,7 +106,7 @@ public fun MediaRouteControllerDialog(
     val context = LocalContext.current.applicationContext
     val viewModel = viewModel<MediaRouteControllerDialogViewModel>(
         key = routeSelector.toString(),
-        factory = MediaRouteControllerDialogViewModel.Factory(volumeControlEnabled, context),
+        factory = MediaRouteControllerDialogViewModel.Factory(context, volumeControlEnabled),
     )
     val showDialog by viewModel.showDialog.collectAsState()
     val isDeviceGroupExpanded by viewModel.isDeviceGroupExpanded.collectAsState()

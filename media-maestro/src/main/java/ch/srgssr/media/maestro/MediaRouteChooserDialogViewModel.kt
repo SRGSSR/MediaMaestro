@@ -5,7 +5,6 @@
 
 package ch.srgssr.media.maestro
 
-import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -33,7 +32,7 @@ import kotlin.time.Duration.Companion.seconds
 /**
  * [ViewModel] exposing useful information for building [MediaRouteChooserDialog].
  *
- * @param application The [Application] instance.
+ * @param context The [Context] instance.
  * @param savedStateHandle The [SavedStateHandle] instance.
  * @param routeSelector The media route selector for filtering the routes that the user can select
  * using the media route chooser dialog.
@@ -41,7 +40,7 @@ import kotlin.time.Duration.Companion.seconds
  * @see MediaRouteChooserDialogViewModel.Factory
  */
 internal class MediaRouteChooserDialogViewModel(
-    private val application: Context,
+    @Suppress("StaticFieldLeak") private val context: Context,
     private val savedStateHandle: SavedStateHandle,
     private val routeSelector: MediaRouteSelector,
 ) : ViewModel() {
@@ -93,7 +92,7 @@ internal class MediaRouteChooserDialogViewModel(
     }
 
     private val mediaRouterCallback = MediaRouterCallback()
-    private val router = MediaRouter.getInstance(application)
+    private val router = MediaRouter.getInstance(context)
     private val screenOffReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == Intent.ACTION_SCREEN_OFF) {
@@ -154,7 +153,7 @@ internal class MediaRouteChooserDialogViewModel(
             MediaRouter.CALLBACK_FLAG_PERFORM_ACTIVE_SCAN,
         )
 
-        application.registerReceiver(screenOffReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
+        context.registerReceiver(screenOffReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
     }
 
     /**
@@ -166,7 +165,7 @@ internal class MediaRouteChooserDialogViewModel(
 
     override fun onCleared() {
         router.removeCallback(mediaRouterCallback)
-        application.unregisterReceiver(screenOffReceiver)
+        context.unregisterReceiver(screenOffReceiver)
     }
 
     private companion object {
@@ -176,16 +175,20 @@ internal class MediaRouteChooserDialogViewModel(
     /**
      * Factory for [MediaRouteChooserDialogViewModel].
      *
+     * @param context The [Context] instance.
      * @param routeSelector  The media route selector for filtering the routes that the user can
      * select using the media route chooser dialog.
      */
-    class Factory(private val routeSelector: MediaRouteSelector, private val context: Context) : ViewModelProvider.Factory {
+    class Factory(
+        private val context: Context,
+        private val routeSelector: MediaRouteSelector,
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
             val savedStateHandle = extras.createSavedStateHandle()
 
             @Suppress("UNCHECKED_CAST")
             return MediaRouteChooserDialogViewModel(
-                application = context,
+                context = context,
                 savedStateHandle = savedStateHandle,
                 routeSelector = routeSelector,
             ) as T
