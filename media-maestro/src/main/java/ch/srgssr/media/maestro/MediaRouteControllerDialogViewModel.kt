@@ -5,8 +5,8 @@
 
 package ch.srgssr.media.maestro
 
-import android.app.Application
 import android.app.PendingIntent
+import android.content.Context
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
@@ -26,11 +26,9 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -52,10 +50,10 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
 internal class MediaRouteControllerDialogViewModel(
-    application: Application,
+    context: Context,
     private val savedStateHandle: SavedStateHandle,
     private val volumeControlEnabled: Boolean,
-) : AndroidViewModel(application) {
+) : ViewModel() {
     internal data class RouteDetail(
         val route: RouteInfo,
         val volume: Float,
@@ -69,7 +67,7 @@ internal class MediaRouteControllerDialogViewModel(
 
     private val mediaControllerCallback = MediaControllerCallback()
     private val mediaRouterCallback = MediaRouterCallback()
-    private val router = MediaRouter.getInstance(application)
+    private val router = MediaRouter.getInstance(context)
     private val isGroupVolumeUxEnabled = MediaRouter.isGroupVolumeUxEnabled()
 
     private val routerUpdates = MutableStateFlow(0)
@@ -109,11 +107,11 @@ internal class MediaRouteControllerDialogViewModel(
         _selectedRoute,
     ) { mediaDescription, playbackState, selectedRoute ->
         if (selectedRoute.presentationDisplayId != RouteInfo.PRESENTATION_DISPLAY_ID_NONE) {
-            application.getString(R.string.mr_controller_casting_screen)
+            context.getString(R.string.mr_controller_casting_screen)
         } else if (playbackState == null || playbackState.state == STATE_NONE) {
-            application.getString(R.string.mr_controller_no_media_selected)
+            context.getString(R.string.mr_controller_no_media_selected)
         } else if (mediaDescription?.title.isNullOrEmpty() && mediaDescription?.subtitle.isNullOrEmpty()) {
-            application.getString(R.string.mr_controller_no_info_available)
+            context.getString(R.string.mr_controller_no_info_available)
         } else {
             mediaDescription.title?.toString()
         }
@@ -132,13 +130,13 @@ internal class MediaRouteControllerDialogViewModel(
         val contentDescription: String
         if (isPlaying && playbackState.isPauseActionSupported) {
             icon = Icons.Pause
-            contentDescription = application.getString(R.string.mr_controller_pause)
+            contentDescription = context.getString(R.string.mr_controller_pause)
         } else if (isPlaying && playbackState.isStopActionSupported) {
             icon = Icons.Stop
-            contentDescription = application.getString(R.string.mr_controller_stop)
+            contentDescription = context.getString(R.string.mr_controller_stop)
         } else if (!isPlaying && playbackState.isPlayActionSupported) {
             icon = Icons.PlayArrow
-            contentDescription = application.getString(R.string.mr_controller_play)
+            contentDescription = context.getString(R.string.mr_controller_play)
         } else {
             return@map null
         }
@@ -163,7 +161,7 @@ internal class MediaRouteControllerDialogViewModel(
         )
 
         router.mediaSessionToken?.let { mediaSessionToken ->
-            val mediaController = MediaControllerCompat(application, mediaSessionToken)
+            val mediaController = MediaControllerCompat(context, mediaSessionToken)
             mediaController.registerCallback(mediaControllerCallback)
 
             this.mediaController = mediaController
@@ -318,14 +316,16 @@ internal class MediaRouteControllerDialogViewModel(
         private val VOLUME_UPDATE_DELAY = 500.milliseconds
     }
 
-    class Factory(private val volumeControlEnabled: Boolean) : ViewModelProvider.Factory {
+    class Factory(
+        private val context: Context,
+        private val volumeControlEnabled: Boolean,
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-            val application = checkNotNull(extras[APPLICATION_KEY])
             val savedStateHandle = extras.createSavedStateHandle()
 
             @Suppress("UNCHECKED_CAST")
             return MediaRouteControllerDialogViewModel(
-                application = application,
+                context = context,
                 savedStateHandle = savedStateHandle,
                 volumeControlEnabled = volumeControlEnabled,
             ) as T
