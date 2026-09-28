@@ -1,7 +1,7 @@
 # ![MediaMaestro](.idea/icon.svg) MediaMaestro
 
 [![Last release](https://img.shields.io/github/v/release/SRGSSR/MediaMaestro?label=Release)](https://github.com/SRGSSR/MediaMaestro/releases)
-[![Android min SDK](https://img.shields.io/badge/Android-21%2B-34A853)](https://github.com/SRGSSR/MediaMaestro)
+[![Android min SDK](https://img.shields.io/badge/Android-23%2B-34A853)](https://github.com/SRGSSR/MediaMaestro)
 [![Build status](https://img.shields.io/github/actions/workflow/status/SRGSSR/MediaMaestro/quality.yml?label=Build)](https://github.com/SRGSSR/MediaMaestro/actions/workflows/quality.yml)
 [![License](https://img.shields.io/github/license/SRGSSR/MediaMaestro?label=License)](https://github.com/SRGSSR/MediaMaestro/blob/main/LICENSE)
 
