@@ -58,6 +58,7 @@ import androidx.mediarouter.media.MediaRouteSelector
 import androidx.mediarouter.media.MediaRouter
 import androidx.mediarouter.media.MediaRouter.RouteInfo
 import ch.srgssr.media.maestro.MediaRouteChooserDialogViewModel.ChooserState
+import ch.srgssr.media.maestro.R as MaestroR
 
 /**
  * This class implements the route chooser dialog for [MediaRouter].
@@ -164,7 +165,18 @@ internal fun ChooserDialog(
             val confirmButtonLabel = state.confirmLabel(context)
             if (confirmButtonLabel != null) {
                 TextButton(
-                    onClick = onDismissRequest,
+                    onClick = {
+                        if (state == ChooserState.LocalNetworkPermissionDenied) {
+                            context.startActivity(
+                                LocalNetworkPermission.createSettingsIntent(
+                                    context
+                                )
+                            )
+                        }
+
+                        onDismissRequest()
+                    },
+
                     colors = buttonColors,
                 ) {
                     Text(text = confirmButtonLabel)
@@ -186,6 +198,10 @@ internal fun ChooserDialog(
                 ChooserState.NoRoutes -> NoRoutes(
                     actionContentColor = buttonColors.contentColor,
                     iconContentColor = iconContentColor,
+                )
+
+                ChooserState.LocalNetworkPermissionDenied -> LocalNetworkPermissionDenied(
+                    iconContentColor
                 )
 
                 ChooserState.ShowingRoutes -> ShowingRoutes(
@@ -457,3 +473,18 @@ private fun ChooserDialogShowingRoutesPreview() {
         )
     }
 }
+
+@Composable
+private fun LocalNetworkPermissionDenied(
+    iconContentColor: Color,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(text = stringResource(MaestroR.string.media_maestro_local_network_permission_denied))
+    }
+}
+

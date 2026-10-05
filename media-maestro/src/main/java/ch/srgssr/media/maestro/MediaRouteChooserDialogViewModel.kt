@@ -28,6 +28,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.flow.update
 import kotlin.time.Duration.Companion.seconds
+import ch.srgssr.media.maestro.R as MaestroR
+
 
 /**
  * [ViewModel] exposing useful information for building [MediaRouteChooserDialog].
@@ -64,6 +66,13 @@ internal class MediaRouteChooserDialogViewModel(
         NoRoutes,
 
         /**
+         * No routes are available because the local network permission was denied.
+         *
+         * @see LocalNetworkPermission
+         */
+        LocalNetworkPermissionDenied,
+
+        /**
          * Available routes are currently being shown.
          */
         ShowingRoutes;
@@ -72,6 +81,7 @@ internal class MediaRouteChooserDialogViewModel(
             val titleRes = when (this) {
                 FindingDevices,
                 NoDevicesNoWifiHint,
+                LocalNetworkPermissionDenied,
                 ShowingRoutes -> R.string.mr_chooser_title
 
                 NoRoutes -> R.string.mr_chooser_zero_routes_found_title
@@ -86,6 +96,7 @@ internal class MediaRouteChooserDialogViewModel(
                 NoDevicesNoWifiHint,
                 ShowingRoutes -> null
 
+                LocalNetworkPermissionDenied -> context.getString(MaestroR.string.media_maestro_open_settings)
                 NoRoutes -> context.getString(android.R.string.ok)
             }
         }
@@ -129,7 +140,9 @@ internal class MediaRouteChooserDialogViewModel(
      */
     @OptIn(ExperimentalCoroutinesApi::class)
     val chooserState = _routes.transformLatest { routes ->
-        if (routes.isEmpty()) {
+        if (LocalNetworkPermission.isMissing(context))
+            emit(ChooserState.LocalNetworkPermissionDenied)
+        else if (routes.isEmpty()) {
             emit(ChooserState.FindingDevices)
 
             delay(5.seconds)

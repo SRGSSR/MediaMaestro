@@ -130,8 +130,9 @@ dependencies {
     implementation(libs.coil.compose.core)
     implementation(libs.coil.core)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.activity.compose)
 
-    testImplementation(libs.androidx.activity)
     testImplementation(libs.androidx.compose.ui.test)
     testImplementation(libs.androidx.lifecycle.viewmodel.testing)
     testImplementation(libs.androidx.mediarouter.testing)

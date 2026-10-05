@@ -5,6 +5,9 @@
 
 package ch.srgssr.media.maestro
 
+import androidx.activity.compose.LocalActivityResultRegistryOwner
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
@@ -92,7 +95,7 @@ public fun MediaRouteButton(
         fixedIcon = fixedIcon,
         colors = colors,
         modifier = modifier,
-        onClick = viewModel::showDialog,
+        onClick = rememberShowDialogAction(onShowDialog = viewModel::showDialog),
     )
 
     when (dialogType) {
@@ -103,6 +106,35 @@ public fun MediaRouteButton(
         DialogType.None -> Unit
     }
 }
+
+
+/**
+ * Remember the action to perform when the button is clicked. If the local network permission is missing, it is
+ * requested first, and [onShowDialog] is called once the user answered.
+ */
+@Composable
+private fun rememberShowDialogAction(onShowDialog: () -> Unit): () -> Unit {
+    // The permission can't be requested without an ActivityResultRegistryOwner (in previews, for example)
+    if (LocalActivityResultRegistryOwner.current == null) {
+        return onShowDialog
+    }
+
+    val context = LocalContext.current
+    val permissionLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
+            onShowDialog()
+        }
+
+    return {
+        val permission = LocalNetworkPermission.permission
+        if (permission != null && LocalNetworkPermission.isMissing(context)) {
+            permissionLauncher.launch(permission)
+        } else {
+            onShowDialog()
+        }
+    }
+}
+
 
 @Composable
 @VisibleForTesting
