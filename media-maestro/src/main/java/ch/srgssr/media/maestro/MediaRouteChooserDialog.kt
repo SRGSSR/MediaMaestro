@@ -200,9 +200,7 @@ internal fun ChooserDialog(
                     iconContentColor = iconContentColor,
                 )
 
-                ChooserState.LocalNetworkPermissionDenied -> LocalNetworkPermissionDenied(
-                    iconContentColor
-                )
+                ChooserState.LocalNetworkPermissionDenied -> LocalNetworkPermissionDenied()
 
                 ChooserState.ShowingRoutes -> ShowingRoutes(
                     routes = routes,
@@ -476,7 +474,6 @@ private fun ChooserDialogShowingRoutesPreview() {
 
 @Composable
 private fun LocalNetworkPermissionDenied(
-    iconContentColor: Color,
     modifier: Modifier = Modifier,
 ) {
     Row(
