@@ -5,6 +5,8 @@
 
 package ch.srgssr.media.maestro.demo
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -40,13 +42,13 @@ import androidx.media3.ui.PlayerView
 import androidx.mediarouter.app.MediaRouteButton
 import androidx.mediarouter.media.MediaRouteSelector
 import ch.srgssr.media.maestro.MediaRouteButton
+import ch.srgssr.media.maestro.PermissionDeniedDialog
 
 class MainActivity : FragmentActivity() {
     private val mainViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
 
         setContent {
@@ -54,6 +56,7 @@ class MainActivity : FragmentActivity() {
 
             DemoTheme {
                 MainView(
+                    context = LocalContext.current.applicationContext,
                     player = mainViewModel.player,
                     useMaestro = useMaestro,
                     routeSelector = mainViewModel.routeSelector,
@@ -68,6 +71,7 @@ class MainActivity : FragmentActivity() {
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 internal fun MainView(
+    context: Context,
     player: Player,
     useMaestro: Boolean,
     routeSelector: MediaRouteSelector,
@@ -81,6 +85,7 @@ internal fun MainView(
                 title = { Text(text = stringResource(R.string.app_name)) },
                 actions = {
                     CastIcon(
+                        context = context,
                         useMaestro = useMaestro,
                         routeSelector = routeSelector,
                     )
@@ -134,8 +139,10 @@ private fun SwitchImplementationButton(
     )
 }
 
+@SuppressLint("VisibleForTests")
 @Composable
 private fun CastIcon(
+    context: Context,
     useMaestro: Boolean,
     routeSelector: MediaRouteSelector,
     modifier: Modifier = Modifier,
@@ -144,6 +151,14 @@ private fun CastIcon(
         MediaRouteButton(
             modifier = modifier,
             routeSelector = routeSelector,
+            permissionDeniedDialog = { context, _ ->
+                PermissionDeniedDialog(
+                    context = context,
+                    message = context.getString(R.string.media_maestro_local_network_permission_denied),
+                    buttonText = context.getString(R.string.media_maestro_open_settings),
+                    modifier = modifier,
+                )
+            }
         )
     } else {
         AndroidView(
@@ -183,6 +198,7 @@ private fun MainViewAndroidXPreview() {
             val context = LocalContext.current
 
             MainView(
+                context = context,
                 player = ExoPlayer.Builder(context).build(),
                 useMaestro = false,
                 routeSelector = MediaRouteSelector.EMPTY,
@@ -200,6 +216,7 @@ private fun MainViewComposePreview() {
             val context = LocalContext.current
 
             MainView(
+                context = context,
                 player = ExoPlayer.Builder(context).build(),
                 useMaestro = true,
                 routeSelector = MediaRouteSelector.EMPTY,

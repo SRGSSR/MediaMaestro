@@ -5,22 +5,34 @@
 
 package ch.srgssr.media.maestro
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import androidx.activity.compose.LocalActivityResultRegistryOwner
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.mediarouter.media.MediaRouteSelector
+import androidx.mediarouter.media.MediaRouter
 
 /**
  * The media route button allows the user to select routes and to control the currently selected
@@ -53,7 +65,11 @@ import androidx.mediarouter.media.MediaRouteSelector
  * be called when the dialog has to be dismissed.
  * @param mediaRouteDynamicControllerDialog The media route controller dialog for dynamic group.
  * @param onDialogTypeChange The callback used to notify when the dialog type has changed.
+ * @param permissionDeniedDialog The permission denied dialog, dialog displayed if an Android 17+
+ * refuses the ACCESS_LOCAL_NETWORK permission (Nearby devices).
+ *
  */
+
 @Composable
 public fun MediaRouteButton(
     modifier: Modifier = Modifier,
@@ -76,6 +92,16 @@ public fun MediaRouteButton(
     // TODO Implement the correct dialog (see https://github.com/SRGSSR/MediaMaestro/issues/19)
     mediaRouteDynamicControllerDialog: @Composable (onDismissRequest: () -> Unit) -> Unit = mediaRouteControllerDialog,
     onDialogTypeChange: (dialogType: DialogType) -> Unit = {},
+    permissionDeniedDialog: @Composable (context: Context, onDismissRequest: () -> Unit) -> Unit =
+        { context, onDismissRequest ->
+            PermissionDeniedDialog(
+                context = context,
+                message = "Permission not granted",
+                buttonText = "Redirect to settings",
+                modifier = modifier,
+                onDismissRequest = onDismissRequest
+            )
+        }
 ) {
     val context = LocalContext.current.applicationContext
     val viewModel = viewModel<MediaRouteButtonViewModel>(
@@ -95,7 +121,16 @@ public fun MediaRouteButton(
         fixedIcon = fixedIcon,
         colors = colors,
         modifier = modifier,
-        onClick = rememberShowDialogAction(onShowDialog = viewModel::showDialog),
+        onClick = rememberShowDialogAction(
+            onPermissionGranted = {
+                viewModel.showDialog()
+                viewModel.permissionUpdates.value = PackageManager.PERMISSION_GRANTED
+            },
+            onPermissionNotGranted = {
+                viewModel.showDialog()
+                viewModel.permissionUpdates.value = PackageManager.PERMISSION_DENIED
+            },
+        ),
     )
 
     when (dialogType) {
@@ -103,6 +138,7 @@ public fun MediaRouteButton(
         DialogType.DynamicChooser -> mediaRouteDynamicChooserDialog(viewModel::hideDialog)
         DialogType.Controller -> mediaRouteControllerDialog(viewModel::hideDialog)
         DialogType.DynamicController -> mediaRouteDynamicControllerDialog(viewModel::hideDialog)
+        DialogType.PermissionDenied -> permissionDeniedDialog(context, viewModel::hideDialog)
         DialogType.None -> Unit
     }
 }
@@ -110,29 +146,93 @@ public fun MediaRouteButton(
 
 /**
  * Remember the action to perform when the button is clicked. If the local network permission is missing, it is
- * requested first, and [onShowDialog] is called once the user answered.
+ * requested first, and [onPermissionGranted] is called once the user answered.
  */
 @Composable
-private fun rememberShowDialogAction(onShowDialog: () -> Unit): () -> Unit {
+private fun rememberShowDialogAction(
+    onPermissionGranted: () -> Unit,
+    onPermissionNotGranted: () -> Unit,
+): () -> Unit {
     // The permission can't be requested without an ActivityResultRegistryOwner (in previews, for example)
     if (LocalActivityResultRegistryOwner.current == null) {
-        return onShowDialog
+        return onPermissionGranted
     }
 
     val context = LocalContext.current
     val permissionLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
-            onShowDialog()
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission())
+        { granted ->
+            if (granted) onPermissionGranted()
+            else onPermissionNotGranted()
         }
 
+    val permission = LocalNetworkPermission.permission
+
     return {
-        val permission = LocalNetworkPermission.permission
-        if (permission != null && LocalNetworkPermission.isMissing(context)) {
-            permissionLauncher.launch(permission)
-        } else {
-            onShowDialog()
+        if (permission == null) onPermissionGranted()
+        else when {
+            ContextCompat.checkSelfPermission(
+                context, Manifest.permission.ACCESS_LOCAL_NETWORK
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // You can use the API that requires the permission.
+                onPermissionGranted()
+            }
+
+            else -> {
+                // You can directly ask for the permission.
+                permissionLauncher.launch(permission)
+            }
         }
     }
+}
+
+/**
+ * This class implements the dialog when the permission to ACCESS_LOCAL_NETWORK is denied
+ * (Nearby devices).
+ *
+ * This dialog should show a warning to the user and provide an appropriate action afterward.
+ *
+ * @param context The [Context] to be applied to this dialog.
+ * @param message The message of the dialog.
+ * @param buttonText The button text of the dialog (positive button).
+ * @param modifier The [Modifier] to be applied to this dialog.
+ * @param onDismissRequest The action to perform when this dialog is dismissed.
+ * @param onClickRequest The action to perform when the button is clicked.
+ *
+ */
+@Composable
+public fun PermissionDeniedDialog(
+    context: Context,
+    message: String,
+    buttonText: String,
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit = {},
+    onClickRequest: (context: Context) -> Unit = { context ->
+        context.startActivity(
+            LocalNetworkPermission.createSettingsIntent(
+                context
+            )
+        )
+    }
+) {
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onClickRequest.invoke(context)
+                },
+            ) {
+                Text(text = buttonText)
+            }
+        },
+        modifier = modifier,
+        text = {
+            Text(
+                text = message,
+            )
+        },
+    )
 }
 
 

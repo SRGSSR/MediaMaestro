@@ -6,6 +6,8 @@
 package ch.srgssr.media.maestro
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -51,6 +53,11 @@ public enum class DialogType {
     DynamicController,
 
     /**
+     * Show the dialog informing about the lack of local network permission
+     */
+    PermissionDenied,
+
+    /**
      * No dialog should be shown.
      */
     None,
@@ -76,6 +83,7 @@ internal class MediaRouteButtonViewModel(
 
     private val _fixedIcon = MutableStateFlow(false)
     private val routerUpdates = MutableStateFlow(0)
+    val permissionUpdates = MutableStateFlow(0)
     private val showDialog = savedStateHandle.getStateFlow(KEY_SHOW_DIALOG, false)
 
     /**
@@ -100,35 +108,40 @@ internal class MediaRouteButtonViewModel(
     /**
      * The type of dialog to show.
      */
-    val dialogType = combine(showDialog, routerUpdates) { showDialog, _ ->
-        if (!showDialog) {
-            return@combine DialogType.None
-        }
+    val dialogType =
+        combine(showDialog, routerUpdates, permissionUpdates) { showDialog, _, permissionUpdates ->
+            if (!showDialog) {
+                return@combine DialogType.None
+            }
 
-        val routerParams = router.routerParams
-        if (routerParams != null) {
-            if (routerParams.isOutputSwitcherEnabled && MediaRouter.isMediaTransferEnabled()) {
-                if (SystemOutputSwitcherDialogController.showDialog(context)) {
-                    return@combine DialogType.None
+            if (permissionUpdates == -1)
+                return@combine DialogType.PermissionDenied
+
+            val routerParams = router.routerParams
+            if (routerParams != null) {
+                if (routerParams.isOutputSwitcherEnabled && MediaRouter.isMediaTransferEnabled()) {
+                    if (SystemOutputSwitcherDialogController.showDialog(context)) {
+                        return@combine DialogType.None
+                    }
                 }
             }
-        }
 
-        val dynamicGroup = routerParams?.dialogType == MediaRouterParams.DIALOG_TYPE_DYNAMIC_GROUP
-        if (router.selectedRoute.isDefaultOrBluetooth) {
-            if (dynamicGroup) {
-                DialogType.DynamicChooser
+            val dynamicGroup =
+                routerParams?.dialogType == MediaRouterParams.DIALOG_TYPE_DYNAMIC_GROUP
+            if (router.selectedRoute.isDefaultOrBluetooth) {
+                if (dynamicGroup) {
+                    DialogType.DynamicChooser
+                } else {
+                    DialogType.Chooser
+                }
             } else {
-                DialogType.Chooser
+                if (dynamicGroup) {
+                    DialogType.DynamicController
+                } else {
+                    DialogType.Controller
+                }
             }
-        } else {
-            if (dynamicGroup) {
-                DialogType.DynamicController
-            } else {
-                DialogType.Controller
-            }
-        }
-    }.distinctUntilChanged()
+        }.distinctUntilChanged()
 
     /**
      * `true` to use a static Cast icon, `false` to use a dynamic icon.
@@ -153,6 +166,14 @@ internal class MediaRouteButtonViewModel(
      */
     fun hideDialog() {
         savedStateHandle[KEY_SHOW_DIALOG] = false
+    }
+
+    /**
+     * Update on Local network permission denied
+     */
+    fun onPermissionDenied() {
+        showDialog()
+        permissionUpdates.value = PackageManager.PERMISSION_DENIED
     }
 
     override fun onCleared() {
