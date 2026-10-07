@@ -142,43 +142,6 @@ public fun MediaRouteButton(
 }
 
 /**
- * Kept for binary compatibility with code compiled before the `permissionDeniedDialog` parameter was added.
- */
-@Composable
-@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
-public fun MediaRouteButton(
-    modifier: Modifier = Modifier,
-    routeSelector: MediaRouteSelector = MediaRouteSelector.EMPTY,
-    colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
-    mediaRouteChooserDialog: @Composable (onDismissRequest: () -> Unit) -> Unit = { onDismissRequest ->
-        MediaRouteChooserDialog(
-            routeSelector = routeSelector,
-            onDismissRequest = onDismissRequest,
-        )
-    },
-    mediaRouteDynamicChooserDialog: @Composable (onDismissRequest: () -> Unit) -> Unit = mediaRouteChooserDialog,
-    mediaRouteControllerDialog: @Composable (onDismissRequest: () -> Unit) -> Unit = { onDismissRequest ->
-        MediaRouteControllerDialog(
-            routeSelector = routeSelector,
-            onDismissRequest = onDismissRequest,
-        )
-    },
-    mediaRouteDynamicControllerDialog: @Composable (onDismissRequest: () -> Unit) -> Unit = mediaRouteControllerDialog,
-    onDialogTypeChange: (dialogType: DialogType) -> Unit = {},
-) {
-    MediaRouteButton(
-        modifier = modifier,
-        routeSelector = routeSelector,
-        colors = colors,
-        mediaRouteChooserDialog = mediaRouteChooserDialog,
-        mediaRouteDynamicChooserDialog = mediaRouteDynamicChooserDialog,
-        mediaRouteControllerDialog = mediaRouteControllerDialog,
-        mediaRouteDynamicControllerDialog = mediaRouteDynamicControllerDialog,
-        onDialogTypeChange = onDialogTypeChange,
-    )
-}
-
-/**
  * Dialog informing the user that the local network permission, required to discover devices on
  * Android 17+, was denied. It offers to open the application settings, where the permission can be
  * granted.
