@@ -6,6 +6,4 @@
     <string name="app_name">MediaMaestro Demo</string>
     <string name="use_androidx">Use AndroidX</string>
     <string name="use_maestro">Use Maestro</string>
-    <string name="media_maestro_local_network_permission_denied">To find devices on your network, allow access to nearby devices in the app settings.</string>
-    <string name="media_maestro_open_settings">Open settings</string>
 </resources>

@@ -28,8 +28,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.flow.update
 import kotlin.time.Duration.Companion.seconds
-import ch.srgssr.media.maestro.R as MaestroR
-
 
 /**
  * [ViewModel] exposing useful information for building [MediaRouteChooserDialog].
@@ -87,6 +85,7 @@ internal class MediaRouteChooserDialogViewModel(
                 FindingDevices,
                 NoDevicesNoWifiHint,
                 ShowingRoutes -> null
+
                 NoRoutes -> context.getString(android.R.string.ok)
             }
         }

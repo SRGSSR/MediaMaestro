@@ -15,7 +15,6 @@ import android.provider.Settings
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import ch.srgssr.media.maestro.LocalNetworkPermission.isHandled
 
 /**
  * Helper for the local network permission, required to discover Cast devices starting with Android 17.
@@ -46,8 +45,8 @@ internal object LocalNetworkPermission {
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.CINNAMON_BUN)
     fun isHandled(context: Context): Boolean {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN &&
-                context.applicationInfo.targetSdkVersion >= Build.VERSION_CODES.CINNAMON_BUN &&
-                isDeclared(context, Manifest.permission.ACCESS_LOCAL_NETWORK)
+            context.applicationInfo.targetSdkVersion >= Build.VERSION_CODES.CINNAMON_BUN &&
+            isDeclared(context, Manifest.permission.ACCESS_LOCAL_NETWORK)
     }
 
     /**
@@ -63,8 +62,7 @@ internal object LocalNetworkPermission {
             return false
         }
 
-        val permissionState =
-            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_LOCAL_NETWORK)
+        val permissionState = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_LOCAL_NETWORK)
 
         return permissionState != PackageManager.PERMISSION_GRANTED
     }
@@ -76,10 +74,7 @@ internal object LocalNetworkPermission {
      * @param context The [Context] instance.
      */
     fun createSettingsIntent(context: Context): Intent {
-        return Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.fromParts("package", context.packageName, null)
-        )
+        return Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null))
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 
