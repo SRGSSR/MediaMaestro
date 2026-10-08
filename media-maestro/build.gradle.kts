@@ -150,6 +150,12 @@ dependencies {
 
     screenshotTestImplementation(libs.android.screenshot.validation.api)
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
+
+    constraints {
+        testImplementation(libs.androidx.test.espresso.core) {
+            because("Espresso < 3.7.0 relies on InputManager.getInstance(), which was removed in API 37")
+        }
+    }
 }
 
 publishing {

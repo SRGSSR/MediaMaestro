@@ -12,6 +12,7 @@ androidx-media = "1.8.0"
 androidx-media3 = "1.11.1"
 androidx-mediarouter = "1.8.1"
 androidx-test-core = "1.7.0"
+androidx-test-espresso = "3.7.0"
 androidx-test-ext-junit = "1.3.0"
 coil = "3.6.3"
 dependency-analysis-gradle-plugin = "3.19.2"
@@ -65,6 +66,7 @@ androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.re
 androidx-mediarouter = { group = "androidx.mediarouter", name = "mediarouter", version.ref = "androidx-mediarouter" }
 androidx-mediarouter-testing = { group = "androidx.mediarouter", name = "mediarouter-testing", version.ref = "androidx-mediarouter" }
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }
+androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-test-espresso" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-compose-core = { group = "io.coil-kt.coil3", name = "coil-compose-core", version.ref = "coil" }
