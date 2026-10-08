@@ -51,6 +51,12 @@ public enum class DialogType {
     DynamicController,
 
     /**
+     * Show the dialog informing the user that the local network permission, required to discover devices on Android
+     * 17+, was denied.
+     */
+    PermissionDenied,
+
+    /**
      * No dialog should be shown.
      */
     None,
@@ -77,6 +83,7 @@ internal class MediaRouteButtonViewModel(
     private val _fixedIcon = MutableStateFlow(false)
     private val routerUpdates = MutableStateFlow(0)
     private val showDialog = savedStateHandle.getStateFlow(KEY_SHOW_DIALOG, false)
+    private val localNetworkPermissionDenied = savedStateHandle.getStateFlow(KEY_LOCAL_NETWORK_PERMISSION_DENIED, false)
 
     /**
      * The [CastConnectionState] for the currently selected route.
@@ -100,9 +107,13 @@ internal class MediaRouteButtonViewModel(
     /**
      * The type of dialog to show.
      */
-    val dialogType = combine(showDialog, routerUpdates) { showDialog, _ ->
+    val dialogType = combine(showDialog, localNetworkPermissionDenied, routerUpdates) { showDialog, denied, _ ->
         if (!showDialog) {
             return@combine DialogType.None
+        }
+
+        if (denied) {
+            return@combine DialogType.PermissionDenied
         }
 
         val routerParams = router.routerParams
@@ -155,6 +166,19 @@ internal class MediaRouteButtonViewModel(
         savedStateHandle[KEY_SHOW_DIALOG] = false
     }
 
+    /**
+     * Show the dialog, depending on the result of the local network permission request.
+     *
+     * @param granted `true` if the permission is granted or not required, `false` otherwise.
+     *
+     * @see LocalNetworkPermission
+     */
+    fun onLocalNetworkPermissionResult(granted: Boolean) {
+        // Update the permission state first, so that the wrong dialog type is never emitted
+        savedStateHandle[KEY_LOCAL_NETWORK_PERMISSION_DENIED] = !granted
+        showDialog()
+    }
+
     override fun onCleared() {
         if (!routeSelector.isEmpty) {
             router.removeCallback(mediaRouterCallback)
@@ -163,6 +187,7 @@ internal class MediaRouteButtonViewModel(
 
     private companion object {
         private const val KEY_SHOW_DIALOG = "showDialog"
+        private const val KEY_LOCAL_NETWORK_PERMISSION_DENIED = "localNetworkPermissionDenied"
     }
 
     /**

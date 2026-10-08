@@ -47,6 +47,19 @@ MediaRouteButton()
 And you're good to go! If you need more customization, you can check
 the [documentation][media-maestro-doc].
 
+### Android 17+
+
+Starting with Android 17, apps targeting API 37 or later need the [local network
+permission][local-network-permission] to discover Cast devices. Declare it in your manifest:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+```
+
+`MediaRouteButton` then requests it when the user clicks on the button. If the permission is
+denied, a dialog invites the user to grant it from the app settings. You can customize this dialog
+with the `permissionDeniedDialog` parameter.
+
 ## Release
 
 New versions are automatically published to GitHub Packages whenever a new tag following the `x.y.z`
@@ -60,5 +73,6 @@ detailed information.
 [androidx-mediarouter]: https://developer.android.com/media/routing/mediarouter
 [compose]: https://developer.android.com/compose
 [license]: https://github.com/SRGSSR/MediaMaestro/blob/main/LICENSE
+[local-network-permission]: https://developer.android.com/privacy-and-security/local-network-permission
 [media-maestro-doc]: https://srgssr.github.io/MediaMaestro
 [new-issue]: https://github.com/SRGSSR/MediaMaestro/issues/new/choose

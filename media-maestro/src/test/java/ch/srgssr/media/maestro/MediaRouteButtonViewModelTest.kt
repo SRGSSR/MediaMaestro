@@ -176,6 +176,52 @@ class MediaRouteButtonViewModelTest {
         }
 
     @Test
+    fun `check the dialog type when the local network permission is granted`() = runTest {
+        viewModel.dialogType.test {
+            viewModel.onLocalNetworkPermissionResult(granted = true)
+
+            assertEquals(DialogType.None, awaitItem())
+            assertEquals(DialogType.Chooser, awaitItem())
+        }
+    }
+
+    @Test
+    fun `check the dialog type when the local network permission is denied`() = runTest {
+        viewModel.dialogType.test {
+            viewModel.onLocalNetworkPermissionResult(granted = false)
+
+            assertEquals(DialogType.None, awaitItem())
+            assertEquals(DialogType.PermissionDenied, awaitItem())
+        }
+    }
+
+    @Test
+    fun `check the dialog type when the local network permission is denied with a non-default route`() = runTest {
+        viewModel.dialogType.test {
+            router.findRouteById(ROUTE_ID_CONNECTED).select()
+            viewModel.onLocalNetworkPermissionResult(granted = false)
+
+            assertEquals(DialogType.None, awaitItem())
+            assertEquals(DialogType.PermissionDenied, awaitItem())
+        }
+    }
+
+    @Test
+    fun `check the dialog type when the local network permission is granted after being denied`() = runTest {
+        viewModel.dialogType.test {
+            viewModel.onLocalNetworkPermissionResult(granted = false)
+            viewModel.hideDialog()
+            viewModel.onLocalNetworkPermissionResult(granted = true)
+
+            // PermissionDenied must not be emitted again before Chooser
+            assertEquals(DialogType.None, awaitItem())
+            assertEquals(DialogType.PermissionDenied, awaitItem())
+            assertEquals(DialogType.None, awaitItem())
+            assertEquals(DialogType.Chooser, awaitItem())
+        }
+    }
+
+    @Test
     fun `check the dialog type when the dialog is hidden with a non-default route`() = runTest {
         viewModel.dialogType.test {
             router.findRouteById(ROUTE_ID_CONNECTED).select()

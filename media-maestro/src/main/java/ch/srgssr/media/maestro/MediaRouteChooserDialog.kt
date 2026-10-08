@@ -164,7 +164,10 @@ internal fun ChooserDialog(
             val confirmButtonLabel = state.confirmLabel(context)
             if (confirmButtonLabel != null) {
                 TextButton(
-                    onClick = onDismissRequest,
+                    onClick = {
+                        onDismissRequest()
+                    },
+
                     colors = buttonColors,
                 ) {
                     Text(text = confirmButtonLabel)
