@@ -98,12 +98,19 @@ jobs:
     # to build your code.
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+    # CodeQL extracts Kotlin by observing the compiler, so compilation must really
+    # run in-process: no Gradle build cache, no Kotlin daemon, no up-to-date tasks.
     - name: Run manual build steps
       if: matrix.build-mode == 'manual'
       shell: bash
       run: >
         ./gradlew assembleDebug
         --no-build-cache
+        --no-configuration-cache
+        --no-daemon
+        --rerun-tasks
+        -Pkotlin.compiler.execution.strategy=in-process
+        -Pkotlin.incremental=false
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
