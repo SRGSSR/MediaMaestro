@@ -4,13 +4,15 @@ public final class ch/srgssr/media/maestro/DialogType : java/lang/Enum {
 	public static final field DynamicChooser Lch/srgssr/media/maestro/DialogType;
 	public static final field DynamicController Lch/srgssr/media/maestro/DialogType;
 	public static final field None Lch/srgssr/media/maestro/DialogType;
+	public static final field PermissionDenied Lch/srgssr/media/maestro/DialogType;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lch/srgssr/media/maestro/DialogType;
 	public static fun values ()[Lch/srgssr/media/maestro/DialogType;
 }
 
 public final class ch/srgssr/media/maestro/MediaRouteButtonKt {
-	public static final fun MediaRouteButton (Landroidx/compose/ui/Modifier;Landroidx/mediarouter/media/MediaRouteSelector;Landroidx/compose/material3/IconButtonColors;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MediaRouteButton (Landroidx/compose/ui/Modifier;Landroidx/mediarouter/media/MediaRouteSelector;Landroidx/compose/material3/IconButtonColors;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PermissionDeniedDialog (Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class ch/srgssr/media/maestro/MediaRouteChooserDialogKt {

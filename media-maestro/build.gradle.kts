@@ -130,8 +130,9 @@ dependencies {
     implementation(libs.coil.compose.core)
     implementation(libs.coil.core)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.activity.compose)
 
-    testImplementation(libs.androidx.activity)
     testImplementation(libs.androidx.compose.ui.test)
     testImplementation(libs.androidx.lifecycle.viewmodel.testing)
     testImplementation(libs.androidx.mediarouter.testing)
@@ -149,6 +150,12 @@ dependencies {
 
     screenshotTestImplementation(libs.android.screenshot.validation.api)
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
+
+    constraints {
+        testImplementation(libs.androidx.test.espresso.core) {
+            because("Espresso < 3.7.0 relies on InputManager.getInstance(), which was removed in API 37")
+        }
+    }
 }
 
 publishing {
