@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId = "ch.srgssr.media.maestro.demo"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
