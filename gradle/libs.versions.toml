@@ -24,7 +24,7 @@ kotlinx-binary-compatibility-validator = "0.18.2"
 kotlinx-coroutines = "1.11.0"
 kotlinx-kover = "0.9.11"
 play-services-cast-framework = "22.3.1"
-robolectric = "4.17"
+robolectric = "4.18"
 turbine = "1.2.1"
 
 [libraries]
