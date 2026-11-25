@@ -133,6 +133,7 @@ dependencies {
     implementation(libs.coil.network.okhttp)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.jspecify)
 
     testImplementation(libs.androidx.compose.ui.test)
     testImplementation(libs.androidx.lifecycle.viewmodel.testing)
